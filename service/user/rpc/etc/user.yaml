@@ -1,6 +1,9 @@
-Name: env-api
-Host: 0.0.0.0
-Port: 8881
+Name: user.rpc
+ListenOn: 0.0.0.0:8080
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: user.rpc
 
 # mysql
 Mysql:
@@ -11,9 +14,3 @@ CacheRedis:
   - Host: 127.0.0.1:6379
     Type: node
     Pass: '123456'
-
-UserRpc:
-  Etcd:
-    Hosts:
-    - 127.0.0.1:2379
-    Key: user.rpc

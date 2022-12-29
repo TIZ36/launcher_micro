@@ -1,12 +1,37 @@
-type Request {
-	Name string `path:"name,options=you|me"`
-}
+type (
+	UserLoginReq {
+		PhoneNum string `json:"phone_num"`
+		Password string `json:"password"`
+	}
 
-type Response {
-	Message string `json:"message"`
-}
+	UserInfoReq {
+		Id int64 `json:"id"`
+	}
+)
+
+type (
+	UserLoginResp {
+		Idtoken string `json:"id_token"`
+		Expire  string `json:"expire"`
+	}
+
+	UserInfoResp {
+		Code   int64  `json:"code"`
+		Id     int64  `json:"id"`
+		Name   string `json:"name"`
+		Number string `json:"phone_number"`
+	}
+)
 
 service user-api {
+	@handler UserLogin
+	get /api/user/login (UserLoginReq) returns (UserLoginResp)
+}
+
+@server (
+	middleware: RoleCheck
+)
+service user-api {
 	@handler UserHandler
-	get /from/:name(Request) returns (Response)
+	get /api/user/:id (UserInfoReq) returns (UserInfoResp)
 }

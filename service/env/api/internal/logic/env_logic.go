@@ -2,8 +2,10 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"google.golang.org/grpc/status"
 	"launcher_micro/service/env/model"
+	"launcher_micro/service/user/rpc/types/user"
 	"net/http"
 
 	"launcher_micro/service/env/api/internal/svc"
@@ -47,8 +49,20 @@ func (l *EnvLogic) Env(req *types.NewParkEnvReq) (resp *types.NewParkEnvResp, er
 
 	_, e = l.svcCtx.ParkEnvModel.Insert(l.ctx, &NewEnv)
 
+	var userId int64 = 1
+
+	userInfoReply, e := l.svcCtx.UserRpc.GetUser(l.ctx, &user.IdReq{
+		Id: userId,
+	})
+
+	fmt.Println(userInfoReply)
+
+	if e != nil {
+		return nil, e
+	}
+
 	return &types.NewParkEnvResp{
 		Code:   http.StatusOK,
-		Result: "success",
+		Result: userInfoReply.Name,
 	}, nil
 }

@@ -1,0 +1,5 @@
+client_id: app_mowwmsg5hwfqhphtn6vksqlyju
+client_secret: CS4ZdC3sTu6GJ8XTfEBtHoqyEhRKto3Jrn92ad29GirZCi
+
+
+Authorization EndPoint: https://zklfhncn.aliyunidaas.com/login/app/app_mowwmsg5hwfqhphtn6vksqlyju/oauth2/authorize
