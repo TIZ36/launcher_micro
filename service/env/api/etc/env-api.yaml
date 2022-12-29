@@ -1,0 +1,13 @@
+Name: env-api
+Host: 0.0.0.0
+Port: 8881
+
+# mysql
+Mysql:
+  DataSource: root:0310@tcp(localhost:3306)/launcher_micro?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+# redisCache
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Type: node
+    Pass: '123456'
