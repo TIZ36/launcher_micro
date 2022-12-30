@@ -2,12 +2,17 @@
 package types
 
 type UserLoginReq struct {
-	PhoneNum string `json:"phone_num"`
-	Password string `json:"password"`
+	PhoneNum string `form:"phone_num"`
+	Password string `form:"password"`
 }
 
 type UserInfoReq struct {
 	Id int64 `json:"id"`
+}
+
+type UserOauthCallBack struct {
+	Code  string `form:"code"`
+	State string `form:"state"`
 }
 
 type UserLoginResp struct {
@@ -20,4 +25,10 @@ type UserInfoResp struct {
 	Id     int64  `json:"id"`
 	Name   string `json:"name"`
 	Number string `json:"phone_number"`
+}
+
+type UserOauthCallBackResp struct {
+	IdToken   string `json:"id_token"`
+	ExpiresIn int64  `json:"expires_in"`
+	ExpiresAt int64  `json:"expires_at"`
 }

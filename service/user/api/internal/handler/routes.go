@@ -17,6 +17,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/user/login",
 				Handler: UserLoginHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/api/user/oauth2/aliyunidaas/callback",
+				Handler: UserOauthCallbackHandler(serverCtx),
+			},
 		},
 	)
 

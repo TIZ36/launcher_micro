@@ -1,11 +1,16 @@
 type (
 	UserLoginReq {
-		PhoneNum string `json:"phone_num"`
-		Password string `json:"password"`
+		PhoneNum string `form:"phone_num"`
+		Password string `form:"password"`
 	}
 
 	UserInfoReq {
 		Id int64 `json:"id"`
+	}
+
+	UserOauthCallBack {
+		Code  string `form:"code"`
+		State string `form:"state"`
 	}
 )
 
@@ -21,11 +26,20 @@ type (
 		Name   string `json:"name"`
 		Number string `json:"phone_number"`
 	}
+
+	UserOauthCallBackResp {
+		IdToken   string `json:"id_token"`
+		ExpiresIn int64  `json:"expires_in"`
+		ExpiresAt int64  `json:"expires_at"`
+	}
 )
 
 service user-api {
 	@handler UserLogin
 	get /api/user/login (UserLoginReq) returns (UserLoginResp)
+	
+	@handler UserOauthCallback
+	get /api/user/oauth2/aliyunidaas/callback (UserOauthCallBack) returns (UserOauthCallBackResp)
 }
 
 @server (

@@ -1,3 +1,16 @@
 Name: user-api
 Host: 0.0.0.0
 Port: 8884
+
+
+SSO:
+  AuthorizationEndPoint: "https://zklfhncn.aliyunidaas.com/login/app/app_mowwmsg5hwfqhphtn6vksqlyju/oauth2/authorize"
+  ClientId : "app_mowwmsg5hwfqhphtn6vksqlyju"
+  ClientSecret: "CS4ZdC3sTu6GJ8XTfEBtHoqyEhRKto3Jrn92ad29GirZCi"
+  RedirectUrl: "http://localhost:8884/api/user/oauth2/aliyunidaas/callback"
+  ResponseType: "code"
+  Scope: "openid"
+  State: "525f49cc-87c4-4655-b79c-4c4f971b1ad1"
+  TokenEndpoint: "https://eiam-api-cn-hangzhou.aliyuncs.com/v2/idaas_z777e4bpx7zdvtyq2svgbbsvke/app_mowwmsg5hwfqhphtn6vksqlyju/oauth2/token"
+  GrantType: "authorization_code"
+

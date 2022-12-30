@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"launcher_micro/service/user/api/internal/logic"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"launcher_micro/service/user/api/internal/logic"
 	"launcher_micro/service/user/api/internal/svc"
 	"launcher_micro/service/user/api/internal/types"
 )
@@ -18,11 +18,6 @@ func UserLoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewUserLoginLogic(r.Context(), svcCtx)
-		resp, err := l.UserLogin(&req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		l.UserLoginRedirect(&req, w, r)
 	}
 }

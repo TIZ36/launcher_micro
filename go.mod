@@ -3,6 +3,7 @@ module launcher_micro
 go 1.18
 
 require (
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/zeromicro/go-zero v1.4.3
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
