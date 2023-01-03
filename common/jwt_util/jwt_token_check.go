@@ -1,7 +1,7 @@
 package jwt_util
 
 import (
-	"fmt"
+	"encoding/json"
 	"github.com/golang-jwt/jwt/v4"
 )
 
@@ -32,13 +32,10 @@ func HodoniIdassPk() IdaasPK {
 	}
 }
 
-func ParseJwtToken(tokenStr string) {
-
+func ParseJwtToken(tokenStr string) ([]byte, error) {
 	claim := jwt.MapClaims{}
-
-	token, _ := jwt.ParseWithClaims(tokenStr, claim, nil)
-
-	fmt.Println(token)
-	fmt.Println(claim)
+	_, _ = jwt.ParseWithClaims(tokenStr, claim, nil)
+	jsonClaim, _ := json.Marshal(claim)
+	return jsonClaim, nil
 
 }

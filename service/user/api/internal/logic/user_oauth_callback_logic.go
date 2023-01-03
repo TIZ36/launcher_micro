@@ -39,6 +39,7 @@ func (l *UserOauthCallbackLogic) UserOauthCallback(req *types.UserOauthCallBack)
 	// todo: add your logic here and delete this line
 
 	var authToken AuthToken
+	var userInfo types.IdaasUserLoginCache
 	authCode := req.Code
 	state := req.State
 
@@ -76,7 +77,32 @@ func (l *UserOauthCallbackLogic) UserOauthCallback(req *types.UserOauthCallBack)
 		return nil, status.Error(http.StatusInternalServerError, e.Error())
 	}
 
-	jwt_util.ParseJwtToken(authToken.IdToken)
+	userInfoBytes, e := jwt_util.ParseJwtToken(authToken.IdToken)
+
+	e = json.Unmarshal(userInfoBytes, &userInfo)
+	if e != nil {
+		return nil, status.Error(http.StatusInternalServerError, e.Error())
+	}
+
+	userInfo.AccessToken = authToken.AccessToken
+	userInfo.IdToken = authToken.IdToken
+	userInfo.ExpiresIn = authToken.ExpiresIn
+	userInfo.ExpiresAt = authToken.ExpiresAt
+
+	userInfoBytesFull, e := json.Marshal(userInfo)
+
+	if e != nil {
+		return nil, status.Error(http.StatusInternalServerError, e.Error())
+	}
+
+	e = l.svcCtx.LocalCache.Set(userInfo.PhoneNum, userInfoBytesFull)
+
+	logx.Infof("userinfo is ", userInfo)
+
+	if e != nil {
+		return nil, status.Error(http.StatusInternalServerError, e.Error())
+	}
+
 	// do token req
 	return &types.UserOauthCallBackResp{
 		IdToken:   authToken.IdToken,

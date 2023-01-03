@@ -1,11 +1,10 @@
 type (
 	UserLoginReq {
 		PhoneNum string `form:"phone_num"`
-		Password string `form:"password"`
 	}
 
 	UserInfoReq {
-		Id int64 `json:"id"`
+		PhoneNum string `path:"phone_num"`
 	}
 
 	UserOauthCallBack {
@@ -16,13 +15,13 @@ type (
 
 type (
 	UserLoginResp {
-		Idtoken string `json:"id_token"`
-		Expire  string `json:"expire"`
+		Idtoken   string `json:"id_token"`
+		ExpiresIn int64  `json:"expires_in"`
+		ExpiresAt int64  `json:"expires_at"`
 	}
 
 	UserInfoResp {
 		Code   int64  `json:"code"`
-		Id     int64  `json:"id"`
 		Name   string `json:"name"`
 		Number string `json:"phone_number"`
 	}
@@ -47,5 +46,5 @@ service user-api {
 )
 service user-api {
 	@handler UserHandler
-	get /api/user/:id (UserInfoReq) returns (UserInfoResp)
+	get /api/user/:phone_num (UserInfoReq) returns (UserInfoResp)
 }

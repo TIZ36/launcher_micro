@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
+	"google.golang.org/grpc/status"
+	"net/http"
 
 	"launcher_micro/service/user/api/internal/svc"
 	"launcher_micro/service/user/api/internal/types"
@@ -24,7 +27,19 @@ func NewUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLogic {
 }
 
 func (l *UserLogic) User(req *types.UserInfoReq) (resp *types.UserInfoResp, err error) {
-	// todo: add your logic here and delete this line
+	var userLoginCache types.IdaasUserLoginCache
+	// 这里一定是有的
+	userCacheBytes, e := l.svcCtx.LocalCache.Get(req.PhoneNum)
 
-	return
+	e = json.Unmarshal(userCacheBytes, &userLoginCache)
+
+	if e != nil {
+		return nil, status.Error(http.StatusInternalServerError, e.Error())
+	}
+
+	return &types.UserInfoResp{
+		Code:   http.StatusOK,
+		Name:   userLoginCache.Name,
+		Number: userLoginCache.PhoneNum,
+	}, nil
 }
